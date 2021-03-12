@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Formatter;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -62,10 +63,13 @@ class GenderRepositoryTestSuite {
         }
 
         //when
-        int pageSize = femaleRepository.findTokensPaginated(2L, 3L).size();
+        List<String> tokensPaginated = femaleRepository.findTokensPaginated(2L, 3L);
+        int pageSize = tokensPaginated.size();
+        String tokenMagdalena = tokensPaginated.get(0);
 
         //then
         assertEquals(3, pageSize);
+        assertEquals(tokenMagdalena, "Magdalena");
     }
 
     @Test

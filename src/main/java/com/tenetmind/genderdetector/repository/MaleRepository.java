@@ -10,9 +10,7 @@ import java.nio.file.Paths;
 public class MaleRepository extends GenderRepositoryImpl {
 
     @Autowired
-    private CoreConfiguration config;
-
-    public MaleRepository() {
+    public MaleRepository(CoreConfiguration config) {
         setFileContainingTokens(Paths.get(config.getPathToMaleTokens()));
     }
 

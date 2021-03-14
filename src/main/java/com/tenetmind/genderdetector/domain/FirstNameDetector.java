@@ -11,7 +11,7 @@ import java.io.IOException;
 public class FirstNameDetector implements GenderDetector {
 
     @Value("${disjoint.repositories}")
-    private boolean repositoriesAreDisjoint;
+    private boolean areRepositoriesDisjoint;
 
     private final GenderRepository femaleRepository;
 
@@ -25,11 +25,19 @@ public class FirstNameDetector implements GenderDetector {
 
     @Override
     public String detect(String sourceStringToCheck) {
-        if (repositoriesAreDisjoint) {
+        if (areRepositoriesDisjoint) {
             return detectOnDisjoint(sourceStringToCheck);
         }
 
         return detectOnNonDisjoint(sourceStringToCheck);
+    }
+
+    public boolean areRepositoriesDisjoint() {
+        return areRepositoriesDisjoint;
+    }
+
+    public void setRepositoriesDisjoint(boolean areRepositoriesDisjoint) {
+        this.areRepositoriesDisjoint = areRepositoriesDisjoint;
     }
 
     private String detectOnDisjoint(String sourceStringToCheck) {

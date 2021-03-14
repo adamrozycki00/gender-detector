@@ -1,7 +1,7 @@
 package com.tenetmind.genderdetector.detector;
 
 import com.tenetmind.genderdetector.provider.DetectorProviderImpl;
-import com.tenetmind.genderdetector.repository.GenderRepositoryImpl;
+import com.tenetmind.genderdetector.repository.GenericGenderRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,10 +26,10 @@ class DetectorProviderTests {
     private DetectorProviderImpl detectorProvider;
 
     @Autowired
-    private GenderRepositoryImpl femaleRepository;
+    private GenericGenderRepository femaleRepository;
 
     @Autowired
-    private GenderRepositoryImpl maleRepository;
+    private GenericGenderRepository maleRepository;
 
     @BeforeEach
     public void setUp() {

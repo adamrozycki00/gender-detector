@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class GenderRepositoryImpl implements GenderRepository {
+public abstract class GenericGenderRepository implements GenderRepository {
 
     private Path fileContainingTokens;
 

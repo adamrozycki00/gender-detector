@@ -20,7 +20,7 @@ class GenderRepositoryTests {
     private static final String FEMALE_FILE = "src/test/resources/female.txt";
 
     @Autowired
-    private GenderRepositoryImpl femaleRepository;
+    private GenericGenderRepository femaleRepository;
 
     @AfterAll
     public static void cleanUp() throws IOException {

@@ -20,7 +20,7 @@ class GenderRepositoryTests {
     private static final String FEMALE_FILE = "src/test/resources/female.txt";
 
     @Autowired
-    private GenericGenderRepository femaleRepository;
+    private GenderRepository femaleRepository;
 
     @AfterAll
     public static void cleanUp() throws IOException {
@@ -30,7 +30,7 @@ class GenderRepositoryTests {
     @Test
     public void shouldReadTokensFromFile() throws IOException {
         //given
-        femaleRepository.setFileContainingTokens(Paths.get(FEMALE_FILE));
+        ((FemaleRepository) femaleRepository).setFileContainingTokens(Paths.get(FEMALE_FILE));
 
         try (Formatter writer = new Formatter(FEMALE_FILE)) {
             writer.format("Alicja\n");
@@ -49,7 +49,7 @@ class GenderRepositoryTests {
     @Test
     public void shouldFindTokensPaginated() throws IOException {
         //given
-        femaleRepository.setFileContainingTokens(Paths.get(FEMALE_FILE));
+        ((FemaleRepository) femaleRepository).setFileContainingTokens(Paths.get(FEMALE_FILE));
 
         try (Formatter writer = new Formatter(FEMALE_FILE)) {
             writer.format("Alicja\n");
@@ -75,7 +75,7 @@ class GenderRepositoryTests {
     @Test
     public void shouldConfirmExistingToken() throws IOException {
         //given
-        femaleRepository.setFileContainingTokens(Paths.get(FEMALE_FILE));
+        ((FemaleRepository) femaleRepository).setFileContainingTokens(Paths.get(FEMALE_FILE));
 
         try (Formatter writer = new Formatter(FEMALE_FILE)) {
             writer.format("Alicja\n");
@@ -94,7 +94,7 @@ class GenderRepositoryTests {
     @Test
     public void shouldNotConfirmNonExistingToken() throws IOException {
         //given
-        femaleRepository.setFileContainingTokens(Paths.get(FEMALE_FILE));
+        ((FemaleRepository) femaleRepository).setFileContainingTokens(Paths.get(FEMALE_FILE));
 
         try (Formatter writer = new Formatter(FEMALE_FILE)) {
             writer.format("Alicja\n");

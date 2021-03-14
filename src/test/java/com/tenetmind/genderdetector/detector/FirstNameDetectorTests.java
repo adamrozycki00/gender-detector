@@ -1,6 +1,8 @@
 package com.tenetmind.genderdetector.detector;
 
-import com.tenetmind.genderdetector.repository.GenericGenderRepository;
+import com.tenetmind.genderdetector.repository.FemaleRepository;
+import com.tenetmind.genderdetector.repository.GenderRepository;
+import com.tenetmind.genderdetector.repository.MaleRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,15 +27,15 @@ class FirstNameDetectorTests {
     private GenderDetector firstNameDetector;
 
     @Autowired
-    private GenericGenderRepository femaleRepository;
+    private GenderRepository femaleRepository;
 
     @Autowired
-    private GenericGenderRepository maleRepository;
+    private GenderRepository maleRepository;
 
     @BeforeEach
     public void setUp() {
-        femaleRepository.setFileContainingTokens(Paths.get(FEMALE_FILE));
-        maleRepository.setFileContainingTokens(Paths.get(MALE_FILE));
+        ((FemaleRepository) femaleRepository).setFileContainingTokens(Paths.get(FEMALE_FILE));
+        ((MaleRepository) maleRepository).setFileContainingTokens(Paths.get(MALE_FILE));
 
         try (Formatter writer = new Formatter(FEMALE_FILE)) {
             writer.format("Maria\n");

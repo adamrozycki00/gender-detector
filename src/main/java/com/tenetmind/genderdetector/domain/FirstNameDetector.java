@@ -80,8 +80,15 @@ public class FirstNameDetector implements GenderDetector {
     }
 
     private String getFirstToken(String sourceStringToCheck) {
-        String[] singleNamesToCheck = sourceStringToCheck.split("\\s+");
-        return singleNamesToCheck[0];
+        if (sourceStringToCheck != null) {
+            String[] singleNamesToCheck = sourceStringToCheck.trim().split("\\s+");
+
+            if (singleNamesToCheck.length > 0) {
+                return singleNamesToCheck[0];
+            }
+        }
+
+        return "";
     }
 
 }

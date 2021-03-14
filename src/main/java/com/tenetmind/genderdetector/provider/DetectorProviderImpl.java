@@ -23,8 +23,7 @@ public class DetectorProviderImpl implements DetectorProvider {
         mapVariantNameToBean.put(config.getFirstNameVariantName(), firstNameDetector);
         mapVariantNameToBean.put(config.getMajorityRuleVariantName(), majorityRuleDetector);
 
-        mapVariantNameToBean.put(
-                "default", mapVariantNameToBean.get(defaultVariantName));
+        mapVariantNameToBean.put("default", mapVariantNameToBean.get(defaultVariantName));
     }
 
     public GenderDetector provide(String detectorVariantName) {
@@ -37,6 +36,7 @@ public class DetectorProviderImpl implements DetectorProvider {
 
     public void setDefaultVariantName(String defaultVariantName) {
         this.defaultVariantName = defaultVariantName;
+        mapVariantNameToBean.put("default", mapVariantNameToBean.get(defaultVariantName));
     }
 
 }

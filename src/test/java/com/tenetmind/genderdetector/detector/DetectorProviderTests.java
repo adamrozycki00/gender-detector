@@ -86,4 +86,19 @@ class DetectorProviderTests {
         assertEquals(GenderDetector.INCONCLUSIVE, result);
     }
 
+    @Test
+    public void shouldUseDefaultDetector() {
+        //given
+        String detectorVariantName = "";
+        String stringToCheck = "Jan Maria Rokita";
+        detectorProvider.setDefaultVariantName("first");
+
+        //when
+        GenderDetector detector = detectorProvider.provide(detectorVariantName);
+        String result = detector.detect(stringToCheck);
+
+        //then
+        assertEquals(GenderDetector.MALE, result);
+    }
+
 }

@@ -10,18 +10,33 @@ import java.util.Map;
 @Component
 public class DetectorProviderImpl implements DetectorProvider {
 
-    private final Map<String, GenderDetector> detectorVariantNameToBeanMapping = new HashMap<>();
+    private final Map<String, GenderDetector> mapVariantNameToBean = new HashMap<>();
+
+    private String defaultVariantName;
 
     public DetectorProviderImpl(CoreConfiguration config,
                                 GenderDetector firstNameDetector,
                                 GenderDetector majorityRuleDetector) {
 
-        detectorVariantNameToBeanMapping.put(config.getFirstNameVariantName(), firstNameDetector);
-        detectorVariantNameToBeanMapping.put(config.getMajorityRuleVariantName(), majorityRuleDetector);
+        defaultVariantName = config.getDefaultVariantName();
+
+        mapVariantNameToBean.put(config.getFirstNameVariantName(), firstNameDetector);
+        mapVariantNameToBean.put(config.getMajorityRuleVariantName(), majorityRuleDetector);
+
+        mapVariantNameToBean.put(
+                "default", mapVariantNameToBean.get(defaultVariantName));
     }
 
     public GenderDetector provide(String detectorVariantName) {
-        return detectorVariantNameToBeanMapping.get(detectorVariantName);
+        GenderDetector detector = mapVariantNameToBean.get(detectorVariantName);
+        if (detector == null) {
+            detector = mapVariantNameToBean.get("default");
+        }
+        return detector;
+    }
+
+    public void setDefaultVariantName(String defaultVariantName) {
+        this.defaultVariantName = defaultVariantName;
     }
 
 }

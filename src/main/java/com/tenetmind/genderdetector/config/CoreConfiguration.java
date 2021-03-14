@@ -12,12 +12,26 @@ public class CoreConfiguration {
     @Value("${male.tokens.path}")
     String pathToMaleTokens;
 
+    @Value("${firstname.variant.name}")
+    String firstNameVariantName;
+
+    @Value("${majorityrule.variant.name}")
+    String majorityRuleVariantName;
+
     public String getPathToFemaleTokens() {
         return pathToFemaleTokens;
     }
 
     public String getPathToMaleTokens() {
         return pathToMaleTokens;
+    }
+
+    public String getFirstNameVariantName() {
+        return firstNameVariantName;
+    }
+
+    public String getMajorityRuleVariantName() {
+        return majorityRuleVariantName;
     }
 
 }

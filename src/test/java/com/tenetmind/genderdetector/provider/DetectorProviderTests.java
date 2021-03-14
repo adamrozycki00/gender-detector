@@ -1,5 +1,6 @@
-package com.tenetmind.genderdetector.detector;
+package com.tenetmind.genderdetector.provider;
 
+import com.tenetmind.genderdetector.detector.GenderDetector;
 import com.tenetmind.genderdetector.provider.DetectorProviderImpl;
 import com.tenetmind.genderdetector.repository.GenericGenderRepository;
 import org.junit.jupiter.api.AfterAll;

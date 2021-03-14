@@ -1,6 +1,6 @@
 package com.tenetmind.genderdetector.detector;
 
-import com.tenetmind.genderdetector.repository.RepositoryProviderImpl;
+import com.tenetmind.genderdetector.repository.provider.RepositoryProviderImpl;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;

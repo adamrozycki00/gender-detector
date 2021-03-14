@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.nio.file.Paths;
 
 @Repository
-public class MaleRepository extends GenderRepositoryImpl {
+public class MaleRepository extends GenericGenderRepository {
 
     @Autowired
     public MaleRepository(CoreConfiguration config) {

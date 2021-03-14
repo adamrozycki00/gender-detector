@@ -15,7 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class GenderRepositoryTestSuite {
+class GenderRepositoryTests {
 
     private static final String FEMALE_FILE = "src/test/resources/female.txt";
 

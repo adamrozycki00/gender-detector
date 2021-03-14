@@ -13,10 +13,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Formatter;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class FirstNameDetectorOnNonDisjointTestSuite {
+class FirstNameDetectorTests {
 
     private static final String FEMALE_FILE = "src/test/resources/female.txt";
     private static final String MALE_FILE = "src/test/resources/male.txt";
@@ -32,13 +32,10 @@ class FirstNameDetectorOnNonDisjointTestSuite {
 
     @BeforeEach
     public void setUp() {
-        ((FirstNameDetector) firstNameDetector).setRepositoriesDisjoint(false);
-
         femaleRepository.setFileContainingTokens(Paths.get(FEMALE_FILE));
         maleRepository.setFileContainingTokens(Paths.get(MALE_FILE));
 
         try (Formatter writer = new Formatter(FEMALE_FILE)) {
-            writer.format("Janina\n");
             writer.format("Maria\n");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -46,7 +43,6 @@ class FirstNameDetectorOnNonDisjointTestSuite {
 
         try (Formatter writer = new Formatter(MALE_FILE)) {
             writer.format("Jan\n");
-            writer.format("Maria\n");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -85,7 +81,7 @@ class FirstNameDetectorOnNonDisjointTestSuite {
     @Test
     public void shouldDetectFemale() {
         //given
-        String stringToCheck = "Janina Maria Rokita";
+        String stringToCheck = "Maria Jan Rokita";
 
         //when
         String result = firstNameDetector.detect(stringToCheck);
@@ -97,7 +93,7 @@ class FirstNameDetectorOnNonDisjointTestSuite {
     @Test
     public void shouldDetectInconclusive() {
         //given
-        String stringToCheck = "Maria Jan Rokita";
+        String stringToCheck = "Alex Jan Rokita";
 
         //when
         String result = firstNameDetector.detect(stringToCheck);

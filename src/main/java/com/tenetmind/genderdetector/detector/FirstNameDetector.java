@@ -9,41 +9,13 @@ import java.io.IOException;
 public class FirstNameDetector implements GenderDetector {
 
     private final RepositoryProviderImpl repositoryProviderImpl;
-    private final boolean areRepositoriesDisjoint;
 
-    public FirstNameDetector(RepositoryProviderImpl repositoryProviderImpl) throws IOException {
+    public FirstNameDetector(RepositoryProviderImpl repositoryProviderImpl) {
         this.repositoryProviderImpl = repositoryProviderImpl;
-        areRepositoriesDisjoint = repositoryProviderImpl.getRepositoriesDisjoint();
     }
 
     @Override
     public String detect(String sourceStringToCheck) {
-        if (areRepositoriesDisjoint) {
-            return detectOnDisjoint(sourceStringToCheck);
-        }
-
-        return detectOnNonDisjoint(sourceStringToCheck);
-    }
-
-    private String detectOnDisjoint(String sourceStringToCheck) {
-        String tokenToCheck = getFirstToken(sourceStringToCheck);
-
-        try {
-            if (repositoryProviderImpl.getFemaleRepository().contains(tokenToCheck)) {
-                return FEMALE;
-            }
-
-            if (repositoryProviderImpl.getMaleRepository().contains(tokenToCheck)) {
-                return MALE;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return INCONCLUSIVE;
-    }
-
-    private String detectOnNonDisjoint(String sourceStringToCheck) {
         String tokenToCheck = getFirstToken(sourceStringToCheck);
 
         boolean tokenIsFemale = false;

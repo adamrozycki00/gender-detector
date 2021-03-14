@@ -1,7 +1,6 @@
 package com.tenetmind.genderdetector.controller;
 
 import com.tenetmind.genderdetector.service.DetectorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -13,8 +12,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 public class DetectorController {
 
-    @Autowired
-    private DetectorService detectorService;
+    private final DetectorService detectorService;
+
+    public DetectorController(DetectorService detectorService) {
+        this.detectorService = detectorService;
+    }
 
     @PostMapping(value = "/detect", consumes = APPLICATION_JSON_VALUE)
     public String detectGender(@RequestBody RequestDto requestDto) {

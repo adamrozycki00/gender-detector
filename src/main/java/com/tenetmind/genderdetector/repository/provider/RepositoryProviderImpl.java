@@ -1,17 +1,18 @@
 package com.tenetmind.genderdetector.repository.provider;
 
 import com.tenetmind.genderdetector.repository.GenderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RepositoryProviderImpl implements RepositoryProvider {
 
-    @Autowired
-    private GenderRepository femaleRepository;
+    private final GenderRepository femaleRepository;
+    private final GenderRepository maleRepository;
 
-    @Autowired
-    private GenderRepository maleRepository;
+    public RepositoryProviderImpl(GenderRepository femaleRepository, GenderRepository maleRepository) {
+        this.femaleRepository = femaleRepository;
+        this.maleRepository = maleRepository;
+    }
 
     public GenderRepository getFemaleRepository() {
         return femaleRepository;

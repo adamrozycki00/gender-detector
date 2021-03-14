@@ -1,4 +1,4 @@
-package com.tenetmind.genderdetector.domain;
+package com.tenetmind.genderdetector.detector;
 
 import com.tenetmind.genderdetector.repository.GenderRepositoryImpl;
 import org.junit.jupiter.api.AfterAll;

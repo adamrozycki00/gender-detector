@@ -1,4 +1,4 @@
-package com.tenetmind.genderdetector.domain;
+package com.tenetmind.genderdetector.detector;
 
 import com.tenetmind.genderdetector.repository.GenderRepository;
 import org.springframework.beans.factory.annotation.Autowired;

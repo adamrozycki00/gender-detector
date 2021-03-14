@@ -102,6 +102,18 @@ class DetectorServiceTests {
     }
 
     @Test
+    public void shouldFindFemaleTokensPaginatedRegardlessOfImproperGenderGiven() throws IOException {
+        //given & when
+        List<String> tokensPaginated = detectorService.getTokens("", 2L, 3L);
+        int pageSize = tokensPaginated.size();
+        String tokenKatarzyna = tokensPaginated.get(0);
+
+        //then
+        assertEquals(3, pageSize);
+        assertEquals(tokenKatarzyna, "Katarzyna");
+    }
+
+    @Test
     public void shouldDetectMale() {
         //given
         String detectorVariantName = "first";

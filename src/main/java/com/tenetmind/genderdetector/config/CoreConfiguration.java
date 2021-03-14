@@ -18,6 +18,9 @@ public class CoreConfiguration {
     @Value("${majorityrule.variant.name}")
     String majorityRuleVariantName;
 
+    @Value("${default.variant.name}")
+    String defaultVariantName;
+
     public String getPathToFemaleTokens() {
         return pathToFemaleTokens;
     }
@@ -32,6 +35,10 @@ public class CoreConfiguration {
 
     public String getMajorityRuleVariantName() {
         return majorityRuleVariantName;
+    }
+
+    public String getDefaultVariantName() {
+        return defaultVariantName;
     }
 
 }

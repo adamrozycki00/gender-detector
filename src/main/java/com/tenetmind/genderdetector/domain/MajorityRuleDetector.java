@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -73,6 +74,12 @@ public class MajorityRuleDetector implements GenderDetector {
             e.printStackTrace();
         }
 
+        if (numberOfConfirmedFemaleTokens > numberOfConfirmedMaleTokens) {
+            return FEMALE;
+        } else if (numberOfConfirmedMaleTokens > numberOfConfirmedFemaleTokens) {
+            return MALE;
+        }
+
         return INCONCLUSIVE;
     }
 
@@ -116,11 +123,21 @@ public class MajorityRuleDetector implements GenderDetector {
             e.printStackTrace();
         }
 
+        if (numberOfConfirmedFemaleTokens > numberOfConfirmedMaleTokens) {
+            return FEMALE;
+        } else if (numberOfConfirmedMaleTokens > numberOfConfirmedFemaleTokens) {
+            return MALE;
+        }
+
         return INCONCLUSIVE;
     }
 
     private List<String> getSeparateTokens(String sourceStringToCheck) {
-        return Arrays.asList(sourceStringToCheck.split("\\s+"));
+        if (sourceStringToCheck == null) {
+            return new ArrayList<>();
+        }
+
+        return Arrays.asList(sourceStringToCheck.trim().split("\\s+"));
     }
 
 }

@@ -1,4 +1,4 @@
-package com.tenetmind.genderdetector.domain;
+package com.tenetmind.genderdetector.detector;
 
 public interface GenderDetector {
 

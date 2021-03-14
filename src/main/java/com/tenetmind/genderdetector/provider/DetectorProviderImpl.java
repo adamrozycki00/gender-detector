@@ -1,6 +1,7 @@
-package com.tenetmind.genderdetector.domain;
+package com.tenetmind.genderdetector.provider;
 
 import com.tenetmind.genderdetector.config.CoreConfiguration;
+import com.tenetmind.genderdetector.detector.GenderDetector;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

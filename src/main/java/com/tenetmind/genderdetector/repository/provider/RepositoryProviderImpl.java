@@ -1,5 +1,6 @@
-package com.tenetmind.genderdetector.repository;
+package com.tenetmind.genderdetector.repository.provider;
 
+import com.tenetmind.genderdetector.repository.GenderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -29,10 +29,6 @@ public abstract class GenericGenderRepository implements GenderRepository {
         return count > 0;
     }
 
-    public Path getFileContainingTokens() {
-        return fileContainingTokens;
-    }
-
     public void setFileContainingTokens(Path fileContainingTokens) {
         this.fileContainingTokens = fileContainingTokens;
     }

@@ -1,6 +1,6 @@
 package com.tenetmind.genderdetector.detector;
 
-import com.tenetmind.genderdetector.repository.RepositoryProviderImpl;
+import com.tenetmind.genderdetector.repository.provider.RepositoryProviderImpl;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -47,7 +47,6 @@ public class FirstNameDetector implements GenderDetector {
     private String getFirstToken(String sourceStringToCheck) {
         if (sourceStringToCheck != null) {
             String[] separateTokensToCheck = sourceStringToCheck.trim().split("\\s+");
-
             if (separateTokensToCheck.length > 0) {
                 return separateTokensToCheck[0];
             }

@@ -2,17 +2,12 @@ package com.tenetmind.genderdetector.provider;
 
 import com.tenetmind.genderdetector.config.CoreConfiguration;
 import com.tenetmind.genderdetector.detector.GenderDetector;
-import com.tenetmind.genderdetector.repository.RepositoryProviderImpl;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Formatter;
 
 import static org.junit.jupiter.api.Assertions.*;

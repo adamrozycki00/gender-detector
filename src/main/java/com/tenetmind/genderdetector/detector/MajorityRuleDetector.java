@@ -1,8 +1,6 @@
 package com.tenetmind.genderdetector.detector;
 
-import com.tenetmind.genderdetector.repository.GenderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import com.tenetmind.genderdetector.repository.RepositoryProviderImpl;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -13,17 +11,12 @@ import java.util.List;
 @Component
 public class MajorityRuleDetector implements GenderDetector {
 
-    @Value("${disjoint.repositories}")
-    private boolean areRepositoriesDisjoint;
+    private final RepositoryProviderImpl repositoryProviderImpl;
+    private final boolean areRepositoriesDisjoint;
 
-    private final GenderRepository femaleRepository;
-
-    private final GenderRepository maleRepository;
-
-    @Autowired
-    public MajorityRuleDetector(GenderRepository femaleRepository, GenderRepository maleRepository) {
-        this.femaleRepository = femaleRepository;
-        this.maleRepository = maleRepository;
+    public MajorityRuleDetector(RepositoryProviderImpl repositoryProviderImpl) throws IOException {
+        this.repositoryProviderImpl = repositoryProviderImpl;
+        areRepositoriesDisjoint = repositoryProviderImpl.getRepositoriesDisjoint();
     }
 
     @Override
@@ -33,14 +26,6 @@ public class MajorityRuleDetector implements GenderDetector {
         }
 
         return detectOnNonDisjoint(sourceStringToCheck);
-    }
-
-    public boolean areRepositoriesDisjoint() {
-        return areRepositoriesDisjoint;
-    }
-
-    public void setRepositoriesDisjoint(boolean areRepositoriesDisjoint) {
-        this.areRepositoriesDisjoint = areRepositoriesDisjoint;
     }
 
     private String detectOnDisjoint(String sourceStringToCheck) {
@@ -54,7 +39,7 @@ public class MajorityRuleDetector implements GenderDetector {
 
         try {
             for (String tokenToCheck : separateTokensToCheck) {
-                if (femaleRepository.contains(tokenToCheck)) {
+                if (repositoryProviderImpl.getFemaleRepository().contains(tokenToCheck)) {
                     ++numberOfConfirmedFemaleTokens;
                 }
 
@@ -62,7 +47,7 @@ public class MajorityRuleDetector implements GenderDetector {
                     return FEMALE;
                 }
 
-                if (maleRepository.contains(tokenToCheck)) {
+                if (repositoryProviderImpl.getMaleRepository().contains(tokenToCheck)) {
                     ++numberOfConfirmedMaleTokens;
                 }
 
@@ -95,7 +80,7 @@ public class MajorityRuleDetector implements GenderDetector {
 
         try {
             for (String tokenToCheck : separateTokensToCheck) {
-                if (femaleRepository.contains(tokenToCheck)) {
+                if (repositoryProviderImpl.getFemaleRepository().contains(tokenToCheck)) {
                     ++numberOfConfirmedFemaleTokens;
                 } else {
                     --numberOfPotentialFemaleTokens;
@@ -107,7 +92,7 @@ public class MajorityRuleDetector implements GenderDetector {
                     return MALE;
                 }
 
-                if (maleRepository.contains(tokenToCheck)) {
+                if (repositoryProviderImpl.getMaleRepository().contains(tokenToCheck)) {
                     ++numberOfConfirmedMaleTokens;
                 } else {
                     --numberOfPotentialMaleTokens;

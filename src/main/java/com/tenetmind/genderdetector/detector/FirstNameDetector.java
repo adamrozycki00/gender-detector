@@ -1,8 +1,6 @@
 package com.tenetmind.genderdetector.detector;
 
-import com.tenetmind.genderdetector.repository.GenderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import com.tenetmind.genderdetector.repository.RepositoryProviderImpl;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -10,17 +8,12 @@ import java.io.IOException;
 @Component
 public class FirstNameDetector implements GenderDetector {
 
-    @Value("${disjoint.repositories}")
-    private boolean areRepositoriesDisjoint;
+    private final RepositoryProviderImpl repositoryProviderImpl;
+    private final boolean areRepositoriesDisjoint;
 
-    private final GenderRepository femaleRepository;
-
-    private final GenderRepository maleRepository;
-
-    @Autowired
-    public FirstNameDetector(GenderRepository femaleRepository, GenderRepository maleRepository) {
-        this.femaleRepository = femaleRepository;
-        this.maleRepository = maleRepository;
+    public FirstNameDetector(RepositoryProviderImpl repositoryProviderImpl) throws IOException {
+        this.repositoryProviderImpl = repositoryProviderImpl;
+        areRepositoriesDisjoint = repositoryProviderImpl.getRepositoriesDisjoint();
     }
 
     @Override
@@ -32,23 +25,15 @@ public class FirstNameDetector implements GenderDetector {
         return detectOnNonDisjoint(sourceStringToCheck);
     }
 
-    public boolean areRepositoriesDisjoint() {
-        return areRepositoriesDisjoint;
-    }
-
-    public void setRepositoriesDisjoint(boolean areRepositoriesDisjoint) {
-        this.areRepositoriesDisjoint = areRepositoriesDisjoint;
-    }
-
     private String detectOnDisjoint(String sourceStringToCheck) {
         String tokenToCheck = getFirstToken(sourceStringToCheck);
 
         try {
-            if (femaleRepository.contains(tokenToCheck)) {
+            if (repositoryProviderImpl.getFemaleRepository().contains(tokenToCheck)) {
                 return FEMALE;
             }
 
-            if (maleRepository.contains(tokenToCheck)) {
+            if (repositoryProviderImpl.getMaleRepository().contains(tokenToCheck)) {
                 return MALE;
             }
         } catch (IOException e) {
@@ -65,11 +50,11 @@ public class FirstNameDetector implements GenderDetector {
         boolean tokenIsMale = false;
 
         try {
-            if (femaleRepository.contains(tokenToCheck)) {
+            if (repositoryProviderImpl.getFemaleRepository().contains(tokenToCheck)) {
                 tokenIsFemale = true;
             }
 
-            if (maleRepository.contains(tokenToCheck)) {
+            if (repositoryProviderImpl.getMaleRepository().contains(tokenToCheck)) {
                 tokenIsMale = true;
             }
         } catch (IOException e) {

@@ -1,9 +1,8 @@
 package com.tenetmind.genderdetector.provider;
 
 import com.tenetmind.genderdetector.detector.GenderDetector;
-import com.tenetmind.genderdetector.repository.FemaleRepository;
-import com.tenetmind.genderdetector.repository.GenderRepository;
-import com.tenetmind.genderdetector.repository.MaleRepository;
+import com.tenetmind.genderdetector.repository.RepositoryProviderImpl;
+import com.tenetmind.genderdetector.repository.RepositoryProviderTestingImpl;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,16 +27,10 @@ class DetectorProviderTests {
     private DetectorProviderImpl detectorProvider;
 
     @Autowired
-    private GenderRepository femaleRepository;
-
-    @Autowired
-    private GenderRepository maleRepository;
+    private RepositoryProviderTestingImpl repositoryProviderTestingImpl;
 
     @BeforeEach
     public void setUp() {
-        ((FemaleRepository) femaleRepository).setFileContainingTokens(Paths.get(FEMALE_FILE));
-        ((MaleRepository) maleRepository).setFileContainingTokens(Paths.get(MALE_FILE));
-
         try (Formatter writer = new Formatter(FEMALE_FILE)) {
             writer.format("Maria\n");
             writer.format("Anna\n");
@@ -52,6 +45,9 @@ class DetectorProviderTests {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        repositoryProviderTestingImpl.setFileForFemaleRepository(Paths.get(FEMALE_FILE));
+        repositoryProviderTestingImpl.setFileForMaleRepository(Paths.get(MALE_FILE));
     }
 
     @AfterAll

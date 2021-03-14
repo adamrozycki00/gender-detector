@@ -1,5 +1,6 @@
 package com.tenetmind.genderdetector.repository;
 
+import com.tenetmind.genderdetector.config.CoreConfiguration;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,14 +19,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class GenderRepositoryTests {
 
-    private static final String FEMALE_FILE = "src/test/resources/female.txt";
+    @Autowired
+    private CoreConfiguration config;
 
     @Autowired
-    private RepositoryProviderTestingImpl repositoryProviderTestingImpl;
+    private RepositoryProviderImpl repositoryProvider;
 
     @BeforeEach
     public void setUp() {
-        try (Formatter writer = new Formatter(FEMALE_FILE)) {
+        try (Formatter writer = new Formatter(config.getPathToFemaleTokens())) {
             writer.format("Alicja\n");
             writer.format("Katarzyna\n");
             writer.format("Małgorzata\n");
@@ -35,19 +37,12 @@ class GenderRepositoryTests {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-        repositoryProviderTestingImpl.setFileForFemaleRepository(Paths.get(FEMALE_FILE));
-    }
-
-    @AfterAll
-    public static void cleanUp() throws IOException {
-        Files.deleteIfExists(Paths.get(FEMALE_FILE));
     }
 
     @Test
     public void shouldReadTokensFromFile() throws IOException {
         //given & when
-        long femaleRepositorySize = repositoryProviderTestingImpl.getFemaleRepository().getTokenStream().count();
+        long femaleRepositorySize = repositoryProvider.getFemaleRepository().getTokenStream().count();
 
         //then
         assertEquals(6, femaleRepositorySize);
@@ -56,7 +51,7 @@ class GenderRepositoryTests {
     @Test
     public void shouldFindTokensPaginated() throws IOException {
         //given & when
-        List<String> tokensPaginated = repositoryProviderTestingImpl.getFemaleRepository().findTokensPaginated(2L, 3L);
+        List<String> tokensPaginated = repositoryProvider.getFemaleRepository().findTokensPaginated(2L, 3L);
         int pageSize = tokensPaginated.size();
         String tokenMagdalena = tokensPaginated.get(0);
 
@@ -68,7 +63,7 @@ class GenderRepositoryTests {
     @Test
     public void shouldConfirmExistingToken() throws IOException {
         //given & when
-        boolean containsKatarzyna = repositoryProviderTestingImpl.getFemaleRepository().contains("Katarzyna");
+        boolean containsKatarzyna = repositoryProvider.getFemaleRepository().contains("Katarzyna");
 
         //then
         assertTrue(containsKatarzyna);
@@ -77,7 +72,7 @@ class GenderRepositoryTests {
     @Test
     public void shouldNotConfirmNonExistingToken() throws IOException {
         //given & when
-        boolean containsJoanna = repositoryProviderTestingImpl.getFemaleRepository().contains("Joanna");
+        boolean containsJoanna = repositoryProvider.getFemaleRepository().contains("Joanna");
 
         //then
         assertFalse(containsJoanna);

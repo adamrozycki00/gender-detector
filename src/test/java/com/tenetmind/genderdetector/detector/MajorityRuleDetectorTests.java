@@ -1,16 +1,12 @@
 package com.tenetmind.genderdetector.detector;
 
-import com.tenetmind.genderdetector.repository.RepositoryProviderTestingImpl;
-import org.junit.jupiter.api.AfterAll;
+import com.tenetmind.genderdetector.config.CoreConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Formatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,18 +14,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 class MajorityRuleDetectorTests {
 
-    private static final String FEMALE_FILE = "src/test/resources/female.txt";
-    private static final String MALE_FILE = "src/test/resources/male.txt";
-
     @Autowired
     private GenderDetector majorityRuleDetector;
 
     @Autowired
-    private RepositoryProviderTestingImpl repositoryProviderTestingImpl;
+    private CoreConfiguration config;
 
     @BeforeEach
     public void setUp() {
-        try (Formatter writer = new Formatter(FEMALE_FILE)) {
+        try (Formatter writer = new Formatter(config.getPathToFemaleTokens())) {
             writer.format("Janina\n");
             writer.format("Maria\n");
             writer.format("Alex\n");
@@ -38,7 +31,7 @@ class MajorityRuleDetectorTests {
             e.printStackTrace();
         }
 
-        try (Formatter writer = new Formatter(MALE_FILE)) {
+        try (Formatter writer = new Formatter(config.getPathToMaleTokens())) {
             writer.format("Jan\n");
             writer.format("Maria\n");
             writer.format("Alex\n");
@@ -46,15 +39,6 @@ class MajorityRuleDetectorTests {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-        repositoryProviderTestingImpl.setFileForFemaleRepository(Paths.get(FEMALE_FILE));
-        repositoryProviderTestingImpl.setFileForMaleRepository(Paths.get(MALE_FILE));
-    }
-
-    @AfterAll
-    public static void cleanUp() throws IOException {
-        Files.deleteIfExists(Paths.get(FEMALE_FILE));
-        Files.deleteIfExists(Paths.get(MALE_FILE));
     }
 
     @Test

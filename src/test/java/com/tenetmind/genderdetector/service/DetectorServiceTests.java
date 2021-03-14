@@ -1,7 +1,8 @@
 package com.tenetmind.genderdetector.service;
 
+import com.tenetmind.genderdetector.config.CoreConfiguration;
 import com.tenetmind.genderdetector.detector.GenderDetector;
-import com.tenetmind.genderdetector.repository.RepositoryProviderTestingImpl;
+import com.tenetmind.genderdetector.repository.RepositoryProviderImpl;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,18 +21,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class DetectorServiceTests {
 
-    private static final String FEMALE_FILE = "src/test/resources/female.txt";
-    private static final String MALE_FILE = "src/test/resources/male.txt";
-
     @Autowired
     private DetectorService detectorService;
 
     @Autowired
-    private RepositoryProviderTestingImpl repositoryProviderTestingImpl;
+    private CoreConfiguration config;
 
     @BeforeEach
     public void setUp() {
-        try (Formatter writer = new Formatter(FEMALE_FILE)) {
+        try (Formatter writer = new Formatter(config.getPathToFemaleTokens())) {
             writer.format("Maria\n");
             writer.format("Dorota\n");
             writer.format("Alicja\n");
@@ -46,7 +44,7 @@ class DetectorServiceTests {
             e.printStackTrace();
         }
 
-        try (Formatter writer = new Formatter(MALE_FILE)) {
+        try (Formatter writer = new Formatter(config.getPathToMaleTokens())) {
             writer.format("Jan\n");
             writer.format("Antoni\n");
 
@@ -61,15 +59,6 @@ class DetectorServiceTests {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-        repositoryProviderTestingImpl.setFileForFemaleRepository(Paths.get(FEMALE_FILE));
-        repositoryProviderTestingImpl.setFileForMaleRepository(Paths.get(MALE_FILE));
-    }
-
-    @AfterAll
-    public static void cleanUp() throws IOException {
-        Files.deleteIfExists(Paths.get(FEMALE_FILE));
-        Files.deleteIfExists(Paths.get(MALE_FILE));
     }
 
     @Test

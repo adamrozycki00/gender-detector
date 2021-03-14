@@ -30,8 +30,9 @@ class MajorityRuleDetectorTests {
     @BeforeEach
     public void setUp() {
         try (Formatter writer = new Formatter(FEMALE_FILE)) {
+            writer.format("Janina\n");
             writer.format("Maria\n");
-            writer.format("Anna\n");
+            writer.format("Alex\n");
             writer.format("Gertruda\n");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -39,6 +40,8 @@ class MajorityRuleDetectorTests {
 
         try (Formatter writer = new Formatter(MALE_FILE)) {
             writer.format("Jan\n");
+            writer.format("Maria\n");
+            writer.format("Alex\n");
             writer.format("Zbigniew\n");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -55,45 +58,9 @@ class MajorityRuleDetectorTests {
     }
 
     @Test
-    public void shouldDetectFemale() {
+    public void shouldDetectMaleWhenMajorityIsMale() {
         //given
-        String stringToCheck = "Anna Zbigniew Gertruda";
-
-        //when
-        String result = majorityRuleDetector.detect(stringToCheck);
-
-        //then
-        assertEquals(GenderDetector.FEMALE, result);
-    }
-
-    @Test
-    public void shouldDetectFemaleRegardlessOfLeadingWhitespace() {
-        //given
-        String stringToCheck = "\nAnna Zbigniew Gertruda";
-
-        //when
-        String result = majorityRuleDetector.detect(stringToCheck);
-
-        //then
-        assertEquals(GenderDetector.FEMALE, result);
-    }
-
-    @Test
-    public void shouldDetectFemaleRegardlessOfManyTokensUnknown() {
-        //given
-        String stringToCheck = "Zbigniew One Two Three Four Anna Maria";
-
-        //when
-        String result = majorityRuleDetector.detect(stringToCheck);
-
-        //then
-        assertEquals(GenderDetector.FEMALE, result);
-    }
-
-    @Test
-    public void shouldDetectMale() {
-        //given
-        String stringToCheck = "Jan Anna Zbigniew";
+        String stringToCheck = "Jan Maria Rokita";
 
         //when
         String result = majorityRuleDetector.detect(stringToCheck);
@@ -103,9 +70,45 @@ class MajorityRuleDetectorTests {
     }
 
     @Test
-    public void shouldDetectInconclusive() {
+    public void shouldDetectMaleRegardlessOfLeadingWhitespace() {
         //given
-        String stringToCheck = "Jan Maria Rokita";
+        String stringToCheck = "\nJan Maria Rokita";
+
+        //when
+        String result = majorityRuleDetector.detect(stringToCheck);
+
+        //then
+        assertEquals(GenderDetector.MALE, result);
+    }
+
+    @Test
+    public void shouldDetectMaleRegardlessOfManyTokensUnknown() {
+        //given
+        String stringToCheck = "Jan One Two Three Four Maria Rokita";
+
+        //when
+        String result = majorityRuleDetector.detect(stringToCheck);
+
+        //then
+        assertEquals(GenderDetector.MALE, result);
+    }
+
+    @Test
+    public void shouldDetectFemaleWhenMajorityIsFemale() {
+        //given
+        String stringToCheck = "Janina Maria Rokita";
+
+        //when
+        String result = majorityRuleDetector.detect(stringToCheck);
+
+        //then
+        assertEquals(GenderDetector.FEMALE, result);
+    }
+
+    @Test
+    public void shouldDetectInconclusiveWhenNoMajority() {
+        //given
+        String stringToCheck = "Maria Alex Rokita";
 
         //when
         String result = majorityRuleDetector.detect(stringToCheck);

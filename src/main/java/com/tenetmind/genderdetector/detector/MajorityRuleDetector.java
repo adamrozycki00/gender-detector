@@ -12,63 +12,13 @@ import java.util.List;
 public class MajorityRuleDetector implements GenderDetector {
 
     private final RepositoryProviderImpl repositoryProviderImpl;
-    private final boolean areRepositoriesDisjoint;
 
-    public MajorityRuleDetector(RepositoryProviderImpl repositoryProviderImpl) throws IOException {
+    public MajorityRuleDetector(RepositoryProviderImpl repositoryProviderImpl) {
         this.repositoryProviderImpl = repositoryProviderImpl;
-        areRepositoriesDisjoint = repositoryProviderImpl.getRepositoriesDisjoint();
     }
 
     @Override
     public String detect(String sourceStringToCheck) {
-        if (areRepositoriesDisjoint) {
-            return detectOnDisjoint(sourceStringToCheck);
-        }
-
-        return detectOnNonDisjoint(sourceStringToCheck);
-    }
-
-    private String detectOnDisjoint(String sourceStringToCheck) {
-        List<String> separateTokensToCheck = getSeparateTokens(sourceStringToCheck);
-        final double numberOfTokensToCheck = separateTokensToCheck.size();
-
-        int numberOfConfirmedFemaleTokens = 0;
-        int numberOfConfirmedMaleTokens = 0;
-
-        final double decisionThreshold = 0.5;
-
-        try {
-            for (String tokenToCheck : separateTokensToCheck) {
-                if (repositoryProviderImpl.getFemaleRepository().contains(tokenToCheck)) {
-                    ++numberOfConfirmedFemaleTokens;
-                }
-
-                if (numberOfConfirmedFemaleTokens / numberOfTokensToCheck > decisionThreshold) {
-                    return FEMALE;
-                }
-
-                if (repositoryProviderImpl.getMaleRepository().contains(tokenToCheck)) {
-                    ++numberOfConfirmedMaleTokens;
-                }
-
-                if (numberOfConfirmedMaleTokens / numberOfTokensToCheck > decisionThreshold) {
-                    return MALE;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (numberOfConfirmedFemaleTokens > numberOfConfirmedMaleTokens) {
-            return FEMALE;
-        } else if (numberOfConfirmedMaleTokens > numberOfConfirmedFemaleTokens) {
-            return MALE;
-        }
-
-        return INCONCLUSIVE;
-    }
-
-    private String detectOnNonDisjoint(String sourceStringToCheck) {
         List<String> separateTokensToCheck = getSeparateTokens(sourceStringToCheck);
         final int numberOfTokensToCheck = separateTokensToCheck.size();
 

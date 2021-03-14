@@ -20,7 +20,7 @@ class GenderRepositoryTests {
     private static final String FEMALE_FILE = "src/test/resources/female.txt";
 
     @Autowired
-    private GenderRepository femaleRepository;
+    private RepositoryProviderTestingImpl repositoryProviderTestingImpl;
 
     @AfterAll
     public static void cleanUp() throws IOException {
@@ -30,17 +30,16 @@ class GenderRepositoryTests {
     @Test
     public void shouldReadTokensFromFile() throws IOException {
         //given
-        ((FemaleRepository) femaleRepository).setFileContainingTokens(Paths.get(FEMALE_FILE));
-
         try (Formatter writer = new Formatter(FEMALE_FILE)) {
             writer.format("Alicja\n");
             writer.format("Katarzyna\n");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        repositoryProviderTestingImpl.setFileForFemaleRepository(Paths.get(FEMALE_FILE));
 
         //when
-        long femaleRepositorySize = femaleRepository.getTokenStream().count();
+        long femaleRepositorySize = repositoryProviderTestingImpl.getFemaleRepository().getTokenStream().count();
 
         //then
         assertEquals(2, femaleRepositorySize);
@@ -49,8 +48,6 @@ class GenderRepositoryTests {
     @Test
     public void shouldFindTokensPaginated() throws IOException {
         //given
-        ((FemaleRepository) femaleRepository).setFileContainingTokens(Paths.get(FEMALE_FILE));
-
         try (Formatter writer = new Formatter(FEMALE_FILE)) {
             writer.format("Alicja\n");
             writer.format("Katarzyna\n");
@@ -61,9 +58,10 @@ class GenderRepositoryTests {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        repositoryProviderTestingImpl.setFileForFemaleRepository(Paths.get(FEMALE_FILE));
 
         //when
-        List<String> tokensPaginated = femaleRepository.findTokensPaginated(2L, 3L);
+        List<String> tokensPaginated = repositoryProviderTestingImpl.getFemaleRepository().findTokensPaginated(2L, 3L);
         int pageSize = tokensPaginated.size();
         String tokenMagdalena = tokensPaginated.get(0);
 
@@ -75,17 +73,16 @@ class GenderRepositoryTests {
     @Test
     public void shouldConfirmExistingToken() throws IOException {
         //given
-        ((FemaleRepository) femaleRepository).setFileContainingTokens(Paths.get(FEMALE_FILE));
-
         try (Formatter writer = new Formatter(FEMALE_FILE)) {
             writer.format("Alicja\n");
             writer.format("Katarzyna\n");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        repositoryProviderTestingImpl.setFileForFemaleRepository(Paths.get(FEMALE_FILE));
 
         //when
-        boolean containsKatarzyna = femaleRepository.contains("Katarzyna");
+        boolean containsKatarzyna = repositoryProviderTestingImpl.getFemaleRepository().contains("Katarzyna");
 
         //then
         assertTrue(containsKatarzyna);
@@ -94,17 +91,16 @@ class GenderRepositoryTests {
     @Test
     public void shouldNotConfirmNonExistingToken() throws IOException {
         //given
-        ((FemaleRepository) femaleRepository).setFileContainingTokens(Paths.get(FEMALE_FILE));
-
         try (Formatter writer = new Formatter(FEMALE_FILE)) {
             writer.format("Alicja\n");
             writer.format("Katarzyna\n");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        repositoryProviderTestingImpl.setFileForFemaleRepository(Paths.get(FEMALE_FILE));
 
         //when
-        boolean containsMonika = femaleRepository.contains("Monika");
+        boolean containsMonika = repositoryProviderTestingImpl.getFemaleRepository().contains("Monika");
 
         //then
         assertFalse(containsMonika);

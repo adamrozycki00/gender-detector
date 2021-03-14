@@ -3,6 +3,7 @@ package com.tenetmind.genderdetector.service;
 import com.tenetmind.genderdetector.detector.GenderDetector;
 import com.tenetmind.genderdetector.provider.DetectorProvider;
 import com.tenetmind.genderdetector.repository.GenderRepository;
+import com.tenetmind.genderdetector.repository.RepositoryProviderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,7 @@ public class DetectorService {
     private DetectorProvider detectorProvider;
 
     @Autowired
-    private GenderRepository femaleRepository;
-
-    @Autowired
-    private GenderRepository maleRepository;
+    private RepositoryProviderImpl repositoryProviderImpl;
 
     public String detectGender(String sourceStringToCheck, String detectorVariantName) {
         GenderDetector detector = detectorProvider.provide(detectorVariantName);
@@ -27,13 +25,17 @@ public class DetectorService {
     }
 
     public List<String> getTokens(String gender, long page, long size) throws IOException {
-        GenderRepository repository = femaleRepository;
+        GenderRepository repository = repositoryProviderImpl.getFemaleRepository();
 
         if (gender.toLowerCase().startsWith("m")) {
-            repository = maleRepository;
+            repository = repositoryProviderImpl.getMaleRepository();
         }
 
         return repository.findTokensPaginated(page, size);
+    }
+
+    public RepositoryProviderImpl getRepositoryService() {
+        return repositoryProviderImpl;
     }
 
 }

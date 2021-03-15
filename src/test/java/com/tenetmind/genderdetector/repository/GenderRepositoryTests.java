@@ -1,10 +1,11 @@
 package com.tenetmind.genderdetector.repository;
 
 import com.tenetmind.genderdetector.config.CoreConfiguration;
-import com.tenetmind.genderdetector.repository.provider.RepositoryProviderImpl;
+import com.tenetmind.genderdetector.repository.provider.RepositoryProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.FileNotFoundException;
@@ -21,7 +22,8 @@ class GenderRepositoryTests {
     private CoreConfiguration config;
 
     @Autowired
-    private RepositoryProviderImpl repositoryProvider;
+    @Qualifier("repositoryProviderImpl")
+    private RepositoryProvider repositoryProvider;
 
     @BeforeEach
     public void setUp() {

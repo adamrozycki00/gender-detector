@@ -1,6 +1,7 @@
 package com.tenetmind.genderdetector.detector;
 
-import com.tenetmind.genderdetector.repository.provider.RepositoryProviderImpl;
+import com.tenetmind.genderdetector.repository.provider.RepositoryProvider;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -8,10 +9,10 @@ import java.io.IOException;
 @Component
 public class FirstNameDetector implements GenderDetector {
 
-    private final RepositoryProviderImpl repositoryProviderImpl;
+    private final RepositoryProvider repositoryProvider;
 
-    public FirstNameDetector(RepositoryProviderImpl repositoryProviderImpl) {
-        this.repositoryProviderImpl = repositoryProviderImpl;
+    public FirstNameDetector(@Qualifier("repositoryProviderImpl") RepositoryProvider repositoryProvider) {
+        this.repositoryProvider = repositoryProvider;
     }
 
     @Override
@@ -22,11 +23,11 @@ public class FirstNameDetector implements GenderDetector {
         boolean tokenIsMale = false;
 
         try {
-            if (repositoryProviderImpl.getFemaleRepository().contains(tokenToCheck)) {
+            if (repositoryProvider.getFemaleRepository().contains(tokenToCheck)) {
                 tokenIsFemale = true;
             }
 
-            if (repositoryProviderImpl.getMaleRepository().contains(tokenToCheck)) {
+            if (repositoryProvider.getMaleRepository().contains(tokenToCheck)) {
                 tokenIsMale = true;
             }
         } catch (IOException e) {

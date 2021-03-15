@@ -2,12 +2,14 @@ package com.tenetmind.genderdetector.provider;
 
 import com.tenetmind.genderdetector.config.CoreConfiguration;
 import com.tenetmind.genderdetector.detector.GenderDetector;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@Qualifier("detectorProviderImpl")
 public class DetectorProviderImpl implements DetectorProvider {
 
     private final Map<String, GenderDetector> mapVariantNameToBean = new HashMap<>();

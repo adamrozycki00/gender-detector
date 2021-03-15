@@ -1,7 +1,7 @@
 package com.tenetmind.genderdetector.service.withmocks;
 
 import com.tenetmind.genderdetector.config.CoreConfiguration;
-import com.tenetmind.genderdetector.repository.FemaleRepository;
+import com.tenetmind.genderdetector.repository.FemaleFileRepository;
 import com.tenetmind.genderdetector.repository.provider.RepositoryProvider;
 import com.tenetmind.genderdetector.service.DetectorService;
 import org.junit.jupiter.api.Test;
@@ -22,11 +22,11 @@ class DetectorServiceWithMocksTests {
     @Test
     public void shouldLimitPageSize() throws Exception {
         //given
-        FemaleRepository femaleRepositoryMock = mock(FemaleRepository.class);
+        FemaleFileRepository femaleFileRepositoryMock = mock(FemaleFileRepository.class);
         RepositoryProvider repositoryProviderMock = mock(RepositoryProvider.class);
 
         detectorService.setRepositoryProvider(repositoryProviderMock);
-        when(repositoryProviderMock.getFemaleRepository()).thenReturn(femaleRepositoryMock);
+        when(repositoryProviderMock.getFemaleRepository()).thenReturn(femaleFileRepositoryMock);
 
         String gender = "female";
         long page = 2L;
@@ -36,7 +36,7 @@ class DetectorServiceWithMocksTests {
         detectorService.getTokens(gender, page, size);
 
         //then
-        verify(femaleRepositoryMock).findTokensPaginated(page, config.getPageSizeLimit());
+        verify(femaleFileRepositoryMock).findTokensPaginated(page, config.getPageSizeLimit());
     }
 
 }

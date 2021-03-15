@@ -5,15 +5,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-@Qualifier("repositoryProviderImpl")
-public class RepositoryProviderImpl implements RepositoryProvider {
+@Qualifier("fileRepositoryProvider")
+public class FileRepositoryProvider implements RepositoryProvider {
 
     private final GenderRepository femaleRepository;
     private final GenderRepository maleRepository;
 
-    public RepositoryProviderImpl(GenderRepository femaleRepository, GenderRepository maleRepository) {
-        this.femaleRepository = femaleRepository;
-        this.maleRepository = maleRepository;
+    public FileRepositoryProvider(GenderRepository femaleFileRepository, GenderRepository maleFileRepository) {
+        this.femaleRepository = femaleFileRepository;
+        this.maleRepository = maleFileRepository;
     }
 
     public GenderRepository getFemaleRepository() {

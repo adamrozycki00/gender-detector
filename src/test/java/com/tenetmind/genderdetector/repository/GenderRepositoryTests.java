@@ -22,7 +22,7 @@ class GenderRepositoryTests {
     private CoreConfiguration config;
 
     @Autowired
-    @Qualifier("repositoryProviderImpl")
+    @Qualifier("fileRepositoryProvider")
     private RepositoryProvider repositoryProvider;
 
     @BeforeEach

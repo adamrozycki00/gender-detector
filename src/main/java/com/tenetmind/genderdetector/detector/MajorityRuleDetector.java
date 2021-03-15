@@ -1,6 +1,7 @@
 package com.tenetmind.genderdetector.detector;
 
-import com.tenetmind.genderdetector.repository.provider.RepositoryProviderImpl;
+import com.tenetmind.genderdetector.repository.provider.RepositoryProvider;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -11,10 +12,10 @@ import java.util.List;
 @Component
 public class MajorityRuleDetector implements GenderDetector {
 
-    private final RepositoryProviderImpl repositoryProviderImpl;
+    private final RepositoryProvider repositoryProvider;
 
-    public MajorityRuleDetector(RepositoryProviderImpl repositoryProviderImpl) {
-        this.repositoryProviderImpl = repositoryProviderImpl;
+    public MajorityRuleDetector(@Qualifier("repositoryProviderImpl") RepositoryProvider repositoryProvider) {
+        this.repositoryProvider = repositoryProvider;
     }
 
     @Override
@@ -30,7 +31,7 @@ public class MajorityRuleDetector implements GenderDetector {
 
         try {
             for (String tokenToCheck : separateTokensToCheck) {
-                if (repositoryProviderImpl.getFemaleRepository().contains(tokenToCheck)) {
+                if (repositoryProvider.getFemaleRepository().contains(tokenToCheck)) {
                     ++numberOfConfirmedFemaleTokens;
                 } else {
                     --numberOfPotentialFemaleTokens;
@@ -42,7 +43,7 @@ public class MajorityRuleDetector implements GenderDetector {
                     return MALE;
                 }
 
-                if (repositoryProviderImpl.getMaleRepository().contains(tokenToCheck)) {
+                if (repositoryProvider.getMaleRepository().contains(tokenToCheck)) {
                     ++numberOfConfirmedMaleTokens;
                 } else {
                     --numberOfPotentialMaleTokens;

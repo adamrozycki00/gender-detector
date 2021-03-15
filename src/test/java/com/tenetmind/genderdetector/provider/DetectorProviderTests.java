@@ -5,6 +5,7 @@ import com.tenetmind.genderdetector.detector.GenderDetector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.FileNotFoundException;
@@ -16,7 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class DetectorProviderTests {
 
     @Autowired
-    private DetectorProviderImpl detectorProvider;
+    @Qualifier("detectorProviderImpl")
+    private DetectorProvider detectorProvider;
 
     @Autowired
     private CoreConfiguration config;
@@ -72,7 +74,7 @@ class DetectorProviderTests {
         //given
         String detectorVariantName = "";
         String stringToCheck = "Jan Maria Rokita";
-        detectorProvider.setDefaultVariantName("first");
+        ((DetectorProviderImpl) detectorProvider).setDefaultVariantName("first");
 
         //when
         GenderDetector detector = detectorProvider.provide(detectorVariantName);

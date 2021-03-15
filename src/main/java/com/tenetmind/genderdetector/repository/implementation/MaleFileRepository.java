@@ -1,6 +1,7 @@
-package com.tenetmind.genderdetector.repository;
+package com.tenetmind.genderdetector.repository.implementation;
 
 import com.tenetmind.genderdetector.config.CoreConfiguration;
+import com.tenetmind.genderdetector.repository.MaleRepository;
 import org.springframework.stereotype.Repository;
 
 import java.nio.file.Paths;

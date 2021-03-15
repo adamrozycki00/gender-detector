@@ -1,7 +1,7 @@
 package com.tenetmind.genderdetector.service.withmocks;
 
 import com.tenetmind.genderdetector.config.CoreConfiguration;
-import com.tenetmind.genderdetector.repository.FemaleFileRepository;
+import com.tenetmind.genderdetector.repository.implementation.FemaleFileRepository;
 import com.tenetmind.genderdetector.repository.provider.RepositoryProvider;
 import com.tenetmind.genderdetector.service.DetectorService;
 import org.junit.jupiter.api.Test;

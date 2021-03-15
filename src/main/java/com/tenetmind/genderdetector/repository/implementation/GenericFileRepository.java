@@ -1,4 +1,6 @@
-package com.tenetmind.genderdetector.repository;
+package com.tenetmind.genderdetector.repository.implementation;
+
+import com.tenetmind.genderdetector.repository.GenderRepository;
 
 import java.io.IOException;
 import java.nio.file.Files;

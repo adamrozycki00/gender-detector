@@ -70,11 +70,31 @@ class DetectorProviderTests {
     }
 
     @Test
-    public void shouldUseDefaultDetector() {
+    public void shouldSetDefaultDetector() {
         //given
+        String detectorVariantName = "default";
+        String stringToCheck = "Jan Maria Rokita";
+
+        //when
+        ((DetectorProviderImpl) detectorProvider).setDefaultVariantName("first");
+        GenderDetector detector = detectorProvider.provide(detectorVariantName);
+        String resultFromFirstAsDefault = detector.detect(stringToCheck);
+
+        ((DetectorProviderImpl) detectorProvider).setDefaultVariantName("majority");
+        detector = detectorProvider.provide(detectorVariantName);
+        String resultFromMajorityAsDefault = detector.detect(stringToCheck);
+
+        //then
+        assertEquals(GenderDetector.MALE, resultFromFirstAsDefault);
+        assertEquals(GenderDetector.INCONCLUSIVE, resultFromMajorityAsDefault);
+    }
+
+    @Test
+    public void shouldUseDefaultDetectorWhenImproperDetectorNameProvided() {
+        //given
+        ((DetectorProviderImpl) detectorProvider).setDefaultVariantName("first");
         String detectorVariantName = "";
         String stringToCheck = "Jan Maria Rokita";
-        ((DetectorProviderImpl) detectorProvider).setDefaultVariantName("first");
 
         //when
         GenderDetector detector = detectorProvider.provide(detectorVariantName);

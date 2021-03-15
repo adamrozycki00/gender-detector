@@ -1,5 +1,6 @@
 package com.tenetmind.genderdetector.service;
 
+import com.tenetmind.genderdetector.config.CoreConfiguration;
 import com.tenetmind.genderdetector.detector.GenderDetector;
 import com.tenetmind.genderdetector.provider.DetectorProvider;
 import com.tenetmind.genderdetector.repository.GenderRepository;
@@ -14,13 +15,15 @@ import java.util.List;
 public class DetectorService {
 
     private final DetectorProvider detectorProvider;
-
     private final RepositoryProvider repositoryProvider;
+    private final long pageSizeLimit;
 
     public DetectorService(@Qualifier("detectorProviderImpl") DetectorProvider detectorProvider,
-                           @Qualifier("repositoryProviderImpl") RepositoryProvider repositoryProvider) {
+                           @Qualifier("repositoryProviderImpl") RepositoryProvider repositoryProvider,
+                           CoreConfiguration config) {
         this.detectorProvider = detectorProvider;
         this.repositoryProvider = repositoryProvider;
+        this.pageSizeLimit = config.getPageSizeLimit();
     }
 
     public String detectGender(String sourceStringToCheck, String detectorVariantName) {
@@ -33,6 +36,10 @@ public class DetectorService {
 
         if (gender.toLowerCase().startsWith("m")) {
             repository = repositoryProvider.getMaleRepository();
+        }
+
+        if (size > pageSizeLimit) {
+            size = pageSizeLimit;
         }
 
         return repository.findTokensPaginated(page, size);

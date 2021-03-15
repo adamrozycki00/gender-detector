@@ -16,19 +16,22 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class CoreConfiguration implements WebMvcConfigurer {
 
     @Value("${female.tokens.path}")
-    String pathToFemaleTokens;
+    private String pathToFemaleTokens;
 
     @Value("${male.tokens.path}")
-    String pathToMaleTokens;
+    private String pathToMaleTokens;
 
     @Value("${firstname.variant.name}")
-    String firstNameVariantName;
+    private String firstNameVariantName;
 
     @Value("${majorityrule.variant.name}")
-    String majorityRuleVariantName;
+    private String majorityRuleVariantName;
 
     @Value("${default.variant.name}")
-    String defaultVariantName;
+    private String defaultVariantName;
+
+    @Value("${page.size.limit}")
+    private long pageSizeLimit;
 
     public String getPathToFemaleTokens() {
         return pathToFemaleTokens;
@@ -48,6 +51,10 @@ public class CoreConfiguration implements WebMvcConfigurer {
 
     public String getDefaultVariantName() {
         return defaultVariantName;
+    }
+
+    public long getPageSizeLimit() {
+        return pageSizeLimit;
     }
 
     @Bean

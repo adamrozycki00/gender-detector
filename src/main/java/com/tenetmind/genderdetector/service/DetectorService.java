@@ -15,8 +15,9 @@ import java.util.List;
 public class DetectorService {
 
     private final DetectorProvider detectorProvider;
-    private final RepositoryProvider repositoryProvider;
     private final long pageSizeLimit;
+
+    private RepositoryProvider repositoryProvider;
 
     public DetectorService(@Qualifier("detectorProviderImpl") DetectorProvider detectorProvider,
                            @Qualifier("repositoryProviderImpl") RepositoryProvider repositoryProvider,
@@ -45,4 +46,7 @@ public class DetectorService {
         return repository.findTokensPaginated(page, size);
     }
 
+    public void setRepositoryProvider(RepositoryProvider repositoryProvider) {
+        this.repositoryProvider = repositoryProvider;
+    }
 }

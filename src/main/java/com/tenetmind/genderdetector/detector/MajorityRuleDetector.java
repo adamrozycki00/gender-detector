@@ -14,7 +14,7 @@ public class MajorityRuleDetector implements GenderDetector {
 
     private final RepositoryProvider repositoryProvider;
 
-    public MajorityRuleDetector(@Qualifier("repositoryProviderImpl") RepositoryProvider repositoryProvider) {
+    public MajorityRuleDetector(@Qualifier("fileRepositoryProvider") RepositoryProvider repositoryProvider) {
         this.repositoryProvider = repositoryProvider;
     }
 

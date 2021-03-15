@@ -20,7 +20,7 @@ public class DetectorService {
     private RepositoryProvider repositoryProvider;
 
     public DetectorService(@Qualifier("detectorProviderImpl") DetectorProvider detectorProvider,
-                           @Qualifier("repositoryProviderImpl") RepositoryProvider repositoryProvider,
+                           @Qualifier("fileRepositoryProvider") RepositoryProvider repositoryProvider,
                            CoreConfiguration config) {
         this.detectorProvider = detectorProvider;
         this.repositoryProvider = repositoryProvider;
@@ -49,4 +49,5 @@ public class DetectorService {
     public void setRepositoryProvider(RepositoryProvider repositoryProvider) {
         this.repositoryProvider = repositoryProvider;
     }
+
 }

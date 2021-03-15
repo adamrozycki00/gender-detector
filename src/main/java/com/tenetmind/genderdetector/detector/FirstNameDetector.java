@@ -11,7 +11,7 @@ public class FirstNameDetector implements GenderDetector {
 
     private final RepositoryProvider repositoryProvider;
 
-    public FirstNameDetector(@Qualifier("repositoryProviderImpl") RepositoryProvider repositoryProvider) {
+    public FirstNameDetector(@Qualifier("fileRepositoryProvider") RepositoryProvider repositoryProvider) {
         this.repositoryProvider = repositoryProvider;
     }
 

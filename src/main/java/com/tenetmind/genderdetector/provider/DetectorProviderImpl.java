@@ -2,7 +2,7 @@ package com.tenetmind.genderdetector.provider;
 
 import com.tenetmind.genderdetector.config.CoreConfiguration;
 import com.tenetmind.genderdetector.detector.GenderDetector;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-@Qualifier("detectorProviderImpl")
+@Primary
 public class DetectorProviderImpl implements DetectorProvider {
 
     private final static String DEFAULT = "default";

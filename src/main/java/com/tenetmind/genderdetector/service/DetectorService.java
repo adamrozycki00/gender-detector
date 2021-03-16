@@ -19,8 +19,8 @@ public class DetectorService {
 
     private RepositoryProvider repositoryProvider;
 
-    public DetectorService(@Qualifier("detectorProviderImpl") DetectorProvider detectorProvider,
-                           @Qualifier("fileRepositoryProvider") RepositoryProvider repositoryProvider,
+    public DetectorService(@Qualifier("fileRepositoryProvider") RepositoryProvider repositoryProvider,
+                           DetectorProvider detectorProvider,
                            CoreConfiguration config) {
         this.detectorProvider = detectorProvider;
         this.repositoryProvider = repositoryProvider;

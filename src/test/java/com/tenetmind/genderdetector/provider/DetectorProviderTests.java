@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class DetectorProviderTests {
 
     @Autowired
-    @Qualifier("detectorProviderImpl")
     private DetectorProvider detectorProvider;
 
     @Autowired

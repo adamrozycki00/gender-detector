@@ -26,7 +26,8 @@ public abstract class GenericFileRepository implements GenderRepository {
 
     public boolean contains(final String tokenToCheck) throws IOException {
         long count = getTokenStream()
-                .filter(token -> token.equals(tokenToCheck))
+                .map(String::toLowerCase)
+                .filter(token -> token.equals(tokenToCheck.toLowerCase()))
                 .count();
         return count > 0;
     }

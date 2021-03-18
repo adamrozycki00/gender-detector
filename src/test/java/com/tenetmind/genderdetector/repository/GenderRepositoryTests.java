@@ -78,4 +78,15 @@ class GenderRepositoryTests {
         assertFalse(containsJoanna);
     }
 
+    @Test
+    public void shouldConfirmExistingNonCaseSensitiveToken() throws IOException {
+        //given & when
+        boolean containsKatarzynaUpperCase = repositoryProvider.getFemaleRepository().contains("KATARZYNA");
+        boolean containsKatarzynaLowerCase = repositoryProvider.getFemaleRepository().contains("katarzyna");
+
+        //then
+        assertTrue(containsKatarzynaUpperCase);
+        assertTrue(containsKatarzynaLowerCase);
+    }
+
 }
